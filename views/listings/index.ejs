@@ -1,0 +1,46 @@
+<%layout("./layouts/boilerplate")%>
+<body>
+  
+    <!-- <h3>All Listings</h3> -->
+    <!-- <form method="GET" action="/listing/new">
+        <button>Create New Listing</button>
+    </form> -->
+    <style>
+
+     #filters{
+      display: flex;
+      flex-wrap: wrap;
+     }
+     .filter{
+      text-align: center;
+      margin-right: 2rem;
+      margin-top: 2rem;
+      opacity: 0.7;
+     }
+     .filter:hover{
+      opacity: 1;
+      cursor: pointer;
+     }
+    </style>
+   
+   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of alllistings){ %>
+        <a href="/listings/<%= listing._id%>" class="listing-link">
+        <div class="card col listing-card" >
+            <img src="<%=listing.image.url %>" class="card-img-top" alt="listign_img" style="height: 20rem;">
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+              <p class="card-text"><b><%= listing.title %></b><br/>
+               
+            </p>
+            </div>
+          </div>
+        </a>
+          <%}%>
+   </div>
+
+
+   
+    
+</body>
+

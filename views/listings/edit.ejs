@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%layout("./layouts/boilerplate")%>
+    
+    <div class="row">
+        <div class="col-8 offset-2">
+            <br/><br/>
+            <h3>Edit your listing</h3>
+    <form method="POST" action="/listings/<%= listing._id%>?_method=PUT" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label
+        for="title " 
+        class="form-label">Title</label>
+        <input name="listing[title]" placeholder="enter title" value="<%=listing.title%>" type="text" class="form-control">
+        </div>
+        
+        
+        <div  class="mb-3">
+            <label
+        for="description " 
+        class="form-label">Description</label>
+            <textarea name="listing[description]" placeholder="enter description"  <%=listing.description%> type="text" class="form-control"></textarea>
+        </div>
+       
+        
+        <div  class="mb-3">
+            <img src="<%= originalImageUrl %>">
+            <label
+        for="Image " 
+        class="form-label">Upload Image</label>
+           
+            <input name="listing[image]"  type="file" class="form-control">
+        </div>
+        
+        
+        <!-- <input name="listing[title]" placeholder="enter title" value="<%=listing.title%>" type="text">
+        <br/>
+        <textarea name="listing[description]" <%=listing.description%> ></textarea>
+        <br/>
+        <input name="listing[image]" placeholder="enter image" value="<%=listing.image%>" type="text">
+        <br/>
+        <input name="listing[price]" placeholder="enter price" value="<%=listing.price%>" type="number">
+        <br/>
+        <input name="listing[country]" placeholder="enter country name" value="<%=listing.country%>" type="text">
+        <br/>
+        <input name="listing[location]" placeholder="enter location" value="<%=listing.location%>" type="text"> -->
+        <br/>
+        <button class="btn btn-dark add-btn">Edit</button>
+    </form>
+</div>
+</div>
+</body>
+</html>

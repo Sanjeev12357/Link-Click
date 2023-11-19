@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
+</head>
+<body>
+    <% layout("./layouts/boilerplate") %>
+    
+    <div class="row">
+        <div class="col-8 offset-2">
+            <br/><br/>
+            <h3>Create a new listing</h3>
+            <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input name="listing[title]" placeholder="Enter title" type="text" class="form-control" required>
+                    <div class="valid-feedback">Title looks good!</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" placeholder="Enter description" type="text" class="form-control" required></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input type="file" name="listing[image]" id="imageInput" class="form-control">
+                    <img id="image" class="img-fluid" alt="Preview Image">
+                </div>
+                
+                <br/>
+                <button class="btn btn-dark add-btn">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/cropperjs/dist/cropper.js"></script>
+    <!-- Add this script to your HTML -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var image = document.getElementById('image');
+            var cropper = new Cropper(image, {
+                aspectRatio: 16 / 9,  // Adjust this based on your requirements
+                // Other options...
+            });
+
+            var input = document.getElementById('imageInput');
+            input.addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    image.src = e.target.result;
+                    cropper.replace(e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            var form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Get the cropped canvas data
+                var canvas = cropper.getCroppedCanvas();
+                var croppedImageData = canvas.toDataURL('image/jpeg'); // or 'image/png'
+
+                // Create a new hidden input to store the cropped image data
+                var hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'listing[croppedImage]';
+                hiddenInput.value = croppedImageData;
+
+                // Append the hidden input to the form
+                form.appendChild(hiddenInput);
+
+                // Submit the form
+                form.submit();
+            });
+        });
+    </script>
+
+</body>
+</html>
